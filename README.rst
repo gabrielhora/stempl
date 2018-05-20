@@ -1,6 +1,8 @@
 stempl
 ======
 
+|travis|
+
 HTML templates with just Python.
 
 Installing
@@ -86,3 +88,6 @@ For more examples checkout the `tests`_ file.
 
 .. _pip: https://pip.pypa.io/en/stable/quickstart/
 .. _tests: stempl/tests.py
+.. |travis| image:: https://travis-ci.org/gabrielhora/stempl.svg?branch=master
+    :target: https://travis-ci.org/gabrielhora/stempl
+    :alt: Travis CI status
