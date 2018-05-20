@@ -88,7 +88,9 @@ class Tag(object):
         if body:
             self.body = body
         if attrs:
-            self.attrs = Attrs({**self.attrs, **attrs})
+            new_attrs = OrderedDict(self.attrs.copy())
+            new_attrs.update(attrs)
+            self.attrs = Attrs(new_attrs)
         return str(self)
 
     def __lshift__(self, other):

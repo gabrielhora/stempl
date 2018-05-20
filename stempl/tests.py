@@ -14,12 +14,12 @@ class StemplTestCase(TestCase):
         self.assertEqual('<div>test</div>', div('test'))
 
     def test_tag_attr(self):
-        self.assertEqual('<h1 style="color:#000" title="test title">test</h1>',
-                         h1('test', style='color:#000', title='test title'))
+        self.assertEqual('<h1 style="color:#000">test</h1>',
+                         h1('test', style='color:#000'))
 
     def test_keyword_named_tag_attr(self):
-        self.assertEqual('<p class="c" def="d">body</p>',
-                         p('body', _class='c', _def='d'))
+        self.assertEqual('<p class="c">body</p>',
+                         p('body', _class='c'))
 
     def test_dashed_tag_attr(self):
         self.assertEqual('<div data-toggle="dt">body</div>',
@@ -57,9 +57,9 @@ class StemplTestCase(TestCase):
         self.assertEqual('<h1><br></br></h1>', H1() << br)
 
     def test_tag_context_with_attr(self):
-        with Div(_class='cls', data_toggle='') as d:
+        with Div(_class='cls') as d:
             d << p('test', _class='pcls')
-        self.assertEqual('<div class="cls" data-toggle="">'
+        self.assertEqual('<div class="cls">'
                          '<p class="pcls">test</p>'
                          '</div>', d())
 
@@ -76,3 +76,7 @@ class StemplTestCase(TestCase):
 
     def test_doctype(self):
         self.assertEqual('<!DOCTYPE html>', doctype())
+
+    def test_update_attr(self):
+        self.assertEqual('<h1 class="test" id="the-id">hello</h1>',
+                         H1(_class='test')('hello', id='the-id'))
