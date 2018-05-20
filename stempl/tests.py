@@ -5,8 +5,8 @@ from stempl import *
 class StemplTestCase(TestCase):
 
     def test_empty_tag(self):
-        self.assertEqual('<br/>', br())
-        self.assertEqual('<br/>', Br()())
+        self.assertEqual('<br></br>', br())
+        self.assertEqual('<br></br>', Br()())
 
     def test_tag_function(self):
         self.assertEqual('<h1>test</h1>', h1('test'))
@@ -53,8 +53,8 @@ class StemplTestCase(TestCase):
     def test_lshift_with_callable(self):
         with Div() as d:
             d << br
-        self.assertEqual('<div><br/></div>', d())
-        self.assertEqual('<h1><br/></h1>', H1() << br)
+        self.assertEqual('<div><br></br></div>', d())
+        self.assertEqual('<h1><br></br></h1>', H1() << br)
 
     def test_tag_context_with_attr(self):
         with Div(_class='cls', data_toggle='') as d:

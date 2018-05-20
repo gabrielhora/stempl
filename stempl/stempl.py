@@ -3,7 +3,7 @@ import sys
 _tags = ['A', 'Abbr', 'Acronym', 'Address', 'Applet', 'Area', 'Article',
          'Aside', 'Audio', 'B', 'Base', 'Basefont', 'Bdi', 'Bdo', 'Big',
          'Blockquote', 'Body', 'Br', 'Button', 'Canvas', 'Caption', 'Center',
-         'Cite', 'Code', 'Col', 'Colgroup', 'Data', 'Datalist', 'Dd', 'Del',
+         'Cite', 'Code', 'Col', 'Colgroup', 'Data', 'Datalist', 'Dd', 'Del_',
          'Details', 'Dfn', 'Dialog', 'Dir', 'Div', 'Dl', 'Dt', 'Em', 'Embed',
          'Fieldset', 'Figcaption', 'Figure', 'Font', 'Footer', 'Form', 'Frame',
          'Frameset', 'H1', 'H6', 'Head', 'Header', 'Hr', 'Html', 'I', 'Iframe',
@@ -20,7 +20,7 @@ _tags = ['A', 'Abbr', 'Acronym', 'Address', 'Applet', 'Area', 'Article',
          'a', 'abbr', 'acronym', 'address', 'applet', 'area', 'article',
          'aside', 'audio', 'b', 'base', 'basefont', 'bdi', 'bdo', 'big',
          'blockquote', 'body', 'br', 'button', 'canvas', 'caption', 'center',
-         'cite', 'code', 'col', 'colgroup', 'data', 'datalist', 'dd', 'del',
+         'cite', 'code', 'col', 'colgroup', 'data', 'datalist', 'dd', 'del_',
          'details', 'dfn', 'dialog', 'dir', 'div', 'dl', 'dt', 'em', 'embed',
          'fieldset', 'figcaption', 'figure', 'font', 'footer', 'form', 'frame',
          'frameset', 'h1', 'h6', 'head', 'header', 'hr', 'html', 'i', 'iframe',
@@ -45,7 +45,7 @@ class Attrs(dict):
         result = ''
         for key, value in self.items():
             key = key.lstrip('_').replace('_', '-')
-            result += f' {key}="{value}"'
+            result += ' {}="{}"'.format(key, value)
         return result
 
 
@@ -59,14 +59,14 @@ class Tag(object):
     Check out :mod:`stempl.tests` for more examples.
     """
 
-    def __init__(self, name, **attrs):
+    def __init__(self, tag_name, **attrs):
         """Create a new HTML tag.
 
-        :param name: name of the tag
-        :type name: str
+        :param tag_name: name of the tag
+        :type tag_name: str
         :param attrs: HTML attributes
         """
-        self.name = name.lower()
+        self.tag_name = tag_name.lower()
         self.attrs = Attrs(attrs)
         self.body = ''
 
@@ -76,7 +76,7 @@ class Tag(object):
     def __exit__(self, *args):
         pass
 
-    def __call__(self, body=None, **attrs) -> str:
+    def __call__(self, body=None, **attrs):
         """Render the HTML tag as string.
 
         :param body: body of the HTML tag
@@ -108,8 +108,10 @@ class Tag(object):
         """Return the string representation of the HTML tag with all it's
         attributes and body"""
         if not self.body:
-            return f'<{self.name}{self.attrs}/>'
-        return f'<{self.name}{self.attrs}>{self.body}</{self.name}>'
+            return '<{name}{attrs}></{name}>'.format(
+                name=self.tag_name, attrs=self.attrs)
+        return '<{name}{attrs}>{body}</{name}>'.format(
+            name=self.tag_name, attrs=self.attrs, body=self.body)
 
 
 def doctype():

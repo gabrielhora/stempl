@@ -1,17 +1,17 @@
 from setuptools import setup
 
-with open('README.md', 'rt', encoding='utf8') as f:
+with open('README.rst', 'rt', encoding='utf8') as f:
     readme = f.read()
 
 
 setup(
     name='stempl',
+    version='1.0.5',
     description='HTML templates with just Python',
     long_description=readme,
     url='http://www.github.com/gabrielhora/stempl',
     author='Gabriel Hora',
     author_email='gabriel@switchpayments.com',
-    version='1.0.0',
     license='MIT',
     packages=['stempl'],
     include_package_data=True,
