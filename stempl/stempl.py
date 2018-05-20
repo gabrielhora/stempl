@@ -110,9 +110,6 @@ class Tag(object):
     def __str__(self):
         """Return the string representation of the HTML tag with all it's
         attributes and body"""
-        if not self.body:
-            return '<{name}{attrs}></{name}>'.format(
-                name=self.tag_name, attrs=self.attrs)
         return '<{name}{attrs}>{body}</{name}>'.format(
             name=self.tag_name, attrs=self.attrs, body=self.body)
 
