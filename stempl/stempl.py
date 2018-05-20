@@ -1,4 +1,5 @@
 import sys
+from collections import OrderedDict
 
 _tags = ['A', 'Abbr', 'Acronym', 'Address', 'Applet', 'Area', 'Article',
          'Aside', 'Audio', 'B', 'Base', 'Basefont', 'Bdi', 'Bdo', 'Big',
@@ -36,7 +37,7 @@ _tags = ['A', 'Abbr', 'Acronym', 'Address', 'Applet', 'Area', 'Article',
 __all__ = ['Tag', 'doctype'] + _tags
 
 
-class Attrs(dict):
+class Attrs(OrderedDict):
     """A dictionary subclass that can print HTML attributes correctly"""
 
     def __str__(self):
