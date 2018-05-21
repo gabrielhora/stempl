@@ -6,7 +6,7 @@ with open('README.rst', 'rt', encoding='utf8') as f:
 
 setup(
     name='stempl',
-    version='1.0.5',
+    version='1.0.7',
     description='HTML templates with just Python',
     long_description=readme,
     url='http://www.github.com/gabrielhora/stempl',

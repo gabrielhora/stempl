@@ -1,6 +1,7 @@
 import sys
 from collections import OrderedDict
 
+_module = sys.modules[__name__]
 _tags = ['A', 'Abbr', 'Acronym', 'Address', 'Applet', 'Area', 'Article',
          'Aside', 'Audio', 'B', 'Base', 'Basefont', 'Bdi', 'Bdo', 'Big',
          'Blockquote', 'Body', 'Br', 'Button', 'Canvas', 'Caption', 'Center',
@@ -119,21 +120,21 @@ def doctype():
     return '<!DOCTYPE html>'
 
 
-# Dynamically define all the Tag classes and functions at import time
-_module = sys.modules[__name__]
+def _class_wrapper(name):
+    """wrapper for the class version of the tag"""
+    def wrapped(**attrs):
+        return Tag(name, **attrs)
+    return wrapped
+
+
+def _func_wrapper(name):
+    """wrapper for the function version of the tag"""
+    def wrapped(body=None, **attrs):
+        return Tag(name, **attrs)(body)
+    return wrapped
+
+
+# add the wrapper functions to the module
 for t in _tags:
-    # wrapper for the class version of the tag
-    def class_wrapper(name):
-        def wrapped(**attrs):
-            return Tag(name, **attrs)
-        return wrapped
-
-    # wrapper for the function version of the tag
-    def func_wrapper(name):
-        def wrapped(body=None, **attrs):
-            return Tag(name, **attrs)(body)
-        return wrapped
-
-    # add the wrapper functions to the module
-    setattr(_module, t, class_wrapper(t.lower()))
-    setattr(_module, t.lower(), func_wrapper(t.lower()))
+    setattr(_module, t, _class_wrapper(t.lower()))
+    setattr(_module, t.lower(), _func_wrapper(t.lower()))
