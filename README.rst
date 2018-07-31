@@ -5,6 +5,11 @@ stempl
 
 HTML templates with just Python.
 
+Should I use this?
+------------------
+
+No. No security concerns were taken into account, this is simply a small pet project.
+
 Installing
 ----------
 
